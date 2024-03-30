@@ -307,81 +307,97 @@ academyFarmPortal.pages.default.initFunction = function (panel) {
     const tbody = document.createElement('tbody')
     table.appendChild(tbody)
 
-    for (let plannet = 0; plannet < 3; plannet++) {
-      for (let farm = 0; farm < 3; farm++) {
-        const row = createElement('tr')
-        row.appendChild(
-          createElement('td', 'text-end', null, `${plannet + 1}-${farm + 1}`),
-        )
-        const total = createElement('span', '', {
-          id: `farm${plannet}${farm}total`,
-        })
-        total.setAttribute('data-bs-toggle', 'tooltip')
-        total.setAttribute('data-bs-title', ' ')
-        portalPanel[`farm${plannet}${farm}total`] = total
-        const totalTd = createElement('td', 'text-end')
-        totalTd.appendChild(total)
-        row.appendChild(totalTd)
-
-        const lockId = `farm${plannet}${farm}lock`
-        const lockCell = createElement('td')
-        let lockContainer = createElement('label', 'lockcontainer')
-        let lockBox = createElement('input', '', {
-          id: lockId,
-          type: 'checkbox',
-          checked: portalPanel.dataLinkage[lockId],
-        })
-        lockBox.addEventListener('change', portalPanel.updateFunction)
-
-        lockContainer.appendChild(lockBox)
-        lockContainer.appendChild(createElement('div', 'lockmark'))
-        lockCell.appendChild(lockContainer)
-        row.appendChild(lockCell)
-
-        GameDB.academy.personnel.forEach((p) => {
-          const cell = createElement('td')
-          const e = createElement(
-            'input',
-            'form-control form-control-sm text-center',
-            {
-              id: `farm${plannet}${farm}${p}`,
-              type: 'number',
-              style: 'width: 80px',
-              placeholder: '0',
-              min: '0',
-              value: portalPanel.dataLinkage[`farm${plannet}${farm}${p}`],
-            },
-          )
-          portalPanel[`farm${plannet}${farm}${p}`] = e
-          e.addEventListener('change', portalPanel.updateFunction)
-
-          cell.append(e)
-          row.appendChild(cell)
-        })
-        const time = createElement('span', '', {
-          id: `farm${plannet}${farm}time`,
-        })
-        time.setAttribute('data-bs-toggle', 'tooltip')
-        time.setAttribute('data-bs-title', ' ')
-        portalPanel[`farm${plannet}${farm}time`] = time
-        const timeTd = createElement('td', 'font-normal')
-        timeTd.appendChild(time)
-        row.appendChild(timeTd)
-
-        tbody.appendChild(row)
-
-        const row2 = createElement('tr')
-        row2.appendChild(createElement('td', '', { colSpan: 3 }))
-        const mat = createElement('td', 'data-material font-normal', {
-          id: `farm${plannet}${farm}mat`,
-          colSpan: 5,
-        })
-        portalPanel[`farm${plannet}${farm}mat`] = mat
-        row2.appendChild(mat)
-
-        tbody.appendChild(row2)
-      }
+    const farms = [
+      { planet: 0, farm: 0 },
+      { planet: 0, farm: 1 },
+      { planet: 0, farm: 2 },
+      { planet: 1, farm: 0 },
+      { planet: 1, farm: 1 },
+      { planet: 1, farm: 2 },
+      { planet: 2, farm: 0 },
+      { planet: 2, farm: 1 },
+      { planet: 2, farm: 2 },
+    ]
+    if (playerData.ouro.enabled) {
+      farms.push({ planet: 3, farm: 0 })
     }
+
+    farms.forEach((f) => {
+      const planet = f.planet
+      const farm = f.farm
+
+      const row = createElement('tr')
+      row.appendChild(
+        createElement('td', 'text-end', null, `${planet + 1}-${farm + 1}`),
+      )
+      const total = createElement('span', '', {
+        id: `farm${planet}${farm}total`,
+      })
+      total.setAttribute('data-bs-toggle', 'tooltip')
+      total.setAttribute('data-bs-title', ' ')
+      portalPanel[`farm${planet}${farm}total`] = total
+      const totalTd = createElement('td', 'text-end')
+      totalTd.appendChild(total)
+      row.appendChild(totalTd)
+
+      const lockId = `farm${planet}${farm}lock`
+      const lockCell = createElement('td')
+      let lockContainer = createElement('label', 'lockcontainer')
+      let lockBox = createElement('input', '', {
+        id: lockId,
+        type: 'checkbox',
+        checked: portalPanel.dataLinkage[lockId],
+      })
+      lockBox.addEventListener('change', portalPanel.updateFunction)
+
+      lockContainer.appendChild(lockBox)
+      lockContainer.appendChild(createElement('div', 'lockmark'))
+      lockCell.appendChild(lockContainer)
+      row.appendChild(lockCell)
+
+      GameDB.academy.personnel.forEach((p) => {
+        const cell = createElement('td')
+        const e = createElement(
+          'input',
+          'form-control form-control-sm text-center',
+          {
+            id: `farm${planet}${farm}${p}`,
+            type: 'number',
+            style: 'width: 80px',
+            placeholder: '0',
+            min: '0',
+            value: portalPanel.dataLinkage[`farm${planet}${farm}${p}`],
+          },
+        )
+        portalPanel[`farm${planet}${farm}${p}`] = e
+        e.addEventListener('change', portalPanel.updateFunction)
+
+        cell.append(e)
+        row.appendChild(cell)
+      })
+      const time = createElement('span', '', {
+        id: `farm${planet}${farm}time`,
+      })
+      time.setAttribute('data-bs-toggle', 'tooltip')
+      time.setAttribute('data-bs-title', ' ')
+      portalPanel[`farm${planet}${farm}time`] = time
+      const timeTd = createElement('td', 'font-normal')
+      timeTd.appendChild(time)
+      row.appendChild(timeTd)
+
+      tbody.appendChild(row)
+
+      const row2 = createElement('tr')
+      row2.appendChild(createElement('td', '', { colSpan: 3 }))
+      const mat = createElement('td', 'data-material font-normal', {
+        id: `farm${planet}${farm}mat`,
+        colSpan: 5,
+      })
+      portalPanel[`farm${planet}${farm}mat`] = mat
+      row2.appendChild(mat)
+
+      tbody.appendChild(row2)
+    })
 
     section.appendChild(table)
 
@@ -542,6 +558,9 @@ academyFarmPortal.pages.default.initFunction = function (panel) {
         { value: '32', label: '3-2' },
         { value: '33', label: '3-3' },
       ]
+      if (playerData.ouro.enabled) {
+        options.push({ value: '41', label: '4-1' })
+      }
 
       const filter = $(
         '<div class="btn-group" role="group" style="margin-bottom: 20px;">',
@@ -683,32 +702,48 @@ function PopulateTiming() {
   let farmData = CalculateFarmTimes()
   const matBonus = GetCurrentMatBonus()
 
-  for (let planet = 0; planet < GameDB.academy.planets; planet++) {
-    for (let farm = 0; farm < 3; farm++) {
-      const farmInfo = GameDB.academy.farms[planet * 3 + farm]
-      const maxPersonnel = farmInfo.maxPop
-      let datum = farmData[planet * 3 + farm]
-
-      const totalEl = portalPanel[`farm${planet}${farm}total`]
-      totalEl.innerText = datum.personnel
-      totalEl.setAttribute('data-bs-title', `Max: ${maxPersonnel}`)
-      totalEl.style.color =
-        datum.personnel > maxPersonnel ? 'var(--bs-danger-text-emphasis)' : ''
-      totalEl.classList.toggle('has-tip', datum.personnel > maxPersonnel)
-      const timeEl = portalPanel[`farm${planet}${farm}time`]
-      timeEl.innerText = datum.time
-      timeEl.classList.toggle('is-capped', datum.isCapped)
-      timeEl.setAttribute('data-bs-title', datum.rawTime || '-')
-      portalPanel[`farm${planet}${farm}mat`].innerText = farmInfo.baseMats
-        .map((a, i) => {
-          if (a === 0) return null
-          const mat = matBonus * a
-          return GameDB.academy.materials[i] + ': ' + formatLargeInteger(mat)
-        })
-        .filter(Boolean)
-        .join(', ')
-    }
+  const farms = [
+    { planet: 0, farm: 0 },
+    { planet: 0, farm: 1 },
+    { planet: 0, farm: 2 },
+    { planet: 1, farm: 0 },
+    { planet: 1, farm: 1 },
+    { planet: 1, farm: 2 },
+    { planet: 2, farm: 0 },
+    { planet: 2, farm: 1 },
+    { planet: 2, farm: 2 },
+  ]
+  if (playerData.ouro.enabled) {
+    farms.push({ planet: 3, farm: 0 })
   }
+
+  farms.forEach((f) => {
+    const planet = f.planet
+    const farm = f.farm
+
+    const farmInfo = GameDB.academy.farms[planet * 3 + farm]
+    const maxPersonnel = farmInfo.maxPop
+    let datum = farmData[planet * 3 + farm]
+
+    const totalEl = portalPanel[`farm${planet}${farm}total`]
+    totalEl.innerText = datum.personnel
+    totalEl.setAttribute('data-bs-title', `Max: ${maxPersonnel}`)
+    totalEl.style.color =
+      datum.personnel > maxPersonnel ? 'var(--bs-danger-text-emphasis)' : ''
+    totalEl.classList.toggle('has-tip', datum.personnel > maxPersonnel)
+    const timeEl = portalPanel[`farm${planet}${farm}time`]
+    timeEl.innerText = datum.time
+    timeEl.classList.toggle('is-capped', datum.isCapped)
+    timeEl.setAttribute('data-bs-title', datum.rawTime || '-')
+    portalPanel[`farm${planet}${farm}mat`].innerText = farmInfo.baseMats
+      .map((a, i) => {
+        if (a === 0) return null
+        const mat = matBonus * a
+        return GameDB.academy.materials[i] + ': ' + formatLargeInteger(mat)
+      })
+      .filter(Boolean)
+      .join(', ')
+  })
 }
 
 function maximizeMissionRate() {

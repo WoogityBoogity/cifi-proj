@@ -2,7 +2,7 @@ let GameDB = {
   version: 3,
   academy: {
     personnel: ['pods', 'fireteams', 'titans', 'corvettes'],
-    planets: 3,
+    planets: 4,
     materials: [
       'Difar',
       'Kento',
@@ -94,6 +94,15 @@ let GameDB = {
         baseAP: 845000,
         // Organium, Adamorphium, Moskom, Darkseid
         baseMats: [0, 0, 0, 0, 5200, 2440, 3980, 160],
+        isTimeRounded: true,
+      },
+      {
+        id: 41,
+        baseTime: 1875000,
+        maxPop: 1000,
+        baseAP: 7180,
+        // Difar, Kento, Organium
+        baseMats: [1, 1, 0, 0, 1, 0, 0, 0],
         isTimeRounded: true,
       },
     ], // END .farms

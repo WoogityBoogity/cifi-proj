@@ -4,6 +4,14 @@ PLAYER DATA CHANGE LOG
 
 */
 
+const blankFarm = {
+  pods: 0,
+  fireteams: 0,
+  titans: 0,
+  corvettes: 0,
+  locked: false,
+}
+
 const blankPlayer = {
   version: 13,
   activePortal: 'academyEffector',
@@ -202,6 +210,87 @@ const blankPlayer = {
           locked: false,
         },
       ],
+      [
+        // Planet 4
+        {
+          // Farm 4-1
+          pods: 0,
+          fireteams: 0,
+          titans: 0,
+          corvettes: 0,
+          locked: false,
+        },
+        {
+          // Farm 4-2
+          pods: 0,
+          fireteams: 0,
+          titans: 0,
+          corvettes: 0,
+          locked: false,
+        },
+        {
+          // Farm 4-3
+          pods: 0,
+          fireteams: 0,
+          titans: 0,
+          corvettes: 0,
+          locked: false,
+        },
+      ],
+      [
+        // Planet 5
+        {
+          // Farm 5-1
+          pods: 0,
+          fireteams: 0,
+          titans: 0,
+          corvettes: 0,
+          locked: false,
+        },
+        {
+          // Farm 5-2
+          pods: 0,
+          fireteams: 0,
+          titans: 0,
+          corvettes: 0,
+          locked: false,
+        },
+        {
+          // Farm 5-3
+          pods: 0,
+          fireteams: 0,
+          titans: 0,
+          corvettes: 0,
+          locked: false,
+        },
+      ],
+      [
+        // Planet 6
+        {
+          // Farm 6-1
+          pods: 0,
+          fireteams: 0,
+          titans: 0,
+          corvettes: 0,
+          locked: false,
+        },
+        {
+          // Farm 6-2
+          pods: 0,
+          fireteams: 0,
+          titans: 0,
+          corvettes: 0,
+          locked: false,
+        },
+        {
+          // Farm 6-3
+          pods: 0,
+          fireteams: 0,
+          titans: 0,
+          corvettes: 0,
+          locked: false,
+        },
+      ],
     ],
     farmYieldSetting: { type: 0, duration: 60 },
     farmYieldSelected: '1-h',
@@ -302,6 +391,16 @@ function fixPlayerData() {
 
   if (!playerData.fleet.ouro) {
     playerData.fleet.ouro = blankPlayer.fleet.ouro
+  }
+
+  if (playerData.academy.farms.length < 6) {
+    while (playerData.academy.farms.length < 6) {
+      playerData.academy.farms.push([
+        { ...blankFarm },
+        { ...blankFarm },
+        { ...blankFarm },
+      ])
+    }
   }
 
   if (playerData.version < blankPlayer.version) {
