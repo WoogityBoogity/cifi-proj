@@ -139,79 +139,80 @@ academyFarmPortal.pages.default.dataLinkage = {
 }
 
 // Adding farm personnel linkages
-for (let planet = 0; planet < GameDB.academy.planets; planet++) {
-  for (let farm = 0; farm < 3; farm++) {
-    let propertyName = `farm${planet}${farm}pods`
-    Object.defineProperty(
-      academyFarmPortal.pages.default.dataLinkage,
-      propertyName,
-      {
-        set: function (value) {
-          playerData.academy.farms[planet][farm].pods = value
-        },
-        get: function () {
-          return playerData.academy.farms[planet][farm].pods
-        },
-      },
-    )
+GameDB.academy.farms.forEach((f) => {
+  const planetId = f.planetId
+  const farmIndex = f.farmIndex
 
-    propertyName = `farm${planet}${farm}fireteams`
-    Object.defineProperty(
-      academyFarmPortal.pages.default.dataLinkage,
-      propertyName,
-      {
-        set: function (value) {
-          playerData.academy.farms[planet][farm].fireteams = value
-        },
-        get: function () {
-          return playerData.academy.farms[planet][farm].fireteams
-        },
+  let propertyName = `farm${planetId}${farmIndex}pods`
+  Object.defineProperty(
+    academyFarmPortal.pages.default.dataLinkage,
+    propertyName,
+    {
+      set: function (value) {
+        playerData.academy.farms[planetId][farmIndex].pods = value
       },
-    )
+      get: function () {
+        return playerData.academy.farms[planetId][farmIndex].pods
+      },
+    },
+  )
 
-    propertyName = `farm${planet}${farm}titans`
-    Object.defineProperty(
-      academyFarmPortal.pages.default.dataLinkage,
-      propertyName,
-      {
-        set: function (value) {
-          playerData.academy.farms[planet][farm].titans = value
-        },
-        get: function () {
-          return playerData.academy.farms[planet][farm].titans
-        },
+  propertyName = `farm${planetId}${farmIndex}fireteams`
+  Object.defineProperty(
+    academyFarmPortal.pages.default.dataLinkage,
+    propertyName,
+    {
+      set: function (value) {
+        playerData.academy.farms[planetId][farmIndex].fireteams = value
       },
-    )
+      get: function () {
+        return playerData.academy.farms[planetId][farmIndex].fireteams
+      },
+    },
+  )
 
-    propertyName = `farm${planet}${farm}corvettes`
-    Object.defineProperty(
-      academyFarmPortal.pages.default.dataLinkage,
-      propertyName,
-      {
-        set: function (value) {
-          playerData.academy.farms[planet][farm].corvettes = value
-        },
-        get: function () {
-          return playerData.academy.farms[planet][farm].corvettes
-        },
+  propertyName = `farm${planetId}${farmIndex}titans`
+  Object.defineProperty(
+    academyFarmPortal.pages.default.dataLinkage,
+    propertyName,
+    {
+      set: function (value) {
+        playerData.academy.farms[planetId][farmIndex].titans = value
       },
-    )
+      get: function () {
+        return playerData.academy.farms[planetId][farmIndex].titans
+      },
+    },
+  )
 
-    propertyName = `farm${planet}${farm}lock`
-    Object.defineProperty(
-      academyFarmPortal.pages.default.dataLinkage,
-      propertyName,
-      {
-        set: function (value) {
-          playerData.academy.farms[planet][farm].locked = value
-        },
-        get: function () {
-          return playerData.academy.farms[planet][farm].locked
-        },
+  propertyName = `farm${planetId}${farmIndex}corvettes`
+  Object.defineProperty(
+    academyFarmPortal.pages.default.dataLinkage,
+    propertyName,
+    {
+      set: function (value) {
+        playerData.academy.farms[planetId][farmIndex].corvettes = value
       },
-    )
-  }
-}
+      get: function () {
+        return playerData.academy.farms[planetId][farmIndex].corvettes
+      },
+    },
+  )
+
+  propertyName = `farm${planetId}${farmIndex}lock`
+  Object.defineProperty(
+    academyFarmPortal.pages.default.dataLinkage,
+    propertyName,
+    {
+      set: function (value) {
+        playerData.academy.farms[planetId][farmIndex].locked = value
+      },
+      get: function () {
+        return playerData.academy.farms[planetId][farmIndex].locked
+      },
+    },
+  )
+})
 
 const createElement = (
   tag = 'div',
@@ -307,24 +308,11 @@ academyFarmPortal.pages.default.initFunction = function (panel) {
     const tbody = document.createElement('tbody')
     table.appendChild(tbody)
 
-    const farms = [
-      { planet: 0, farm: 0 },
-      { planet: 0, farm: 1 },
-      { planet: 0, farm: 2 },
-      { planet: 1, farm: 0 },
-      { planet: 1, farm: 1 },
-      { planet: 1, farm: 2 },
-      { planet: 2, farm: 0 },
-      { planet: 2, farm: 1 },
-      { planet: 2, farm: 2 },
-    ]
-    if (playerData.ouro.enabled) {
-      farms.push({ planet: 3, farm: 0 })
-    }
+    const farms = GetAvailableFarms()
 
     farms.forEach((f) => {
-      const planet = f.planet
-      const farm = f.farm
+      const planet = f.planetId
+      const farm = f.farmIndex
 
       const row = createElement('tr')
       row.appendChild(
@@ -702,24 +690,11 @@ function PopulateTiming() {
   let farmData = CalculateFarmTimes()
   const matBonus = GetCurrentMatBonus()
 
-  const farms = [
-    { planet: 0, farm: 0 },
-    { planet: 0, farm: 1 },
-    { planet: 0, farm: 2 },
-    { planet: 1, farm: 0 },
-    { planet: 1, farm: 1 },
-    { planet: 1, farm: 2 },
-    { planet: 2, farm: 0 },
-    { planet: 2, farm: 1 },
-    { planet: 2, farm: 2 },
-  ]
-  if (playerData.ouro.enabled) {
-    farms.push({ planet: 3, farm: 0 })
-  }
+  const farms = GetAvailableFarms()
 
   farms.forEach((f) => {
-    const planet = f.planet
-    const farm = f.farm
+    const planet = f.planetId
+    const farm = f.farmIndex
 
     const farmInfo = GameDB.academy.farms[planet * 3 + farm]
     const maxPersonnel = farmInfo.maxPop

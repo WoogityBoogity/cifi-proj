@@ -2,7 +2,6 @@ let GameDB = {
   version: 3,
   academy: {
     personnel: ['pods', 'fireteams', 'titans', 'corvettes'],
-    planets: 4,
     materials: [
       'Difar',
       'Kento',
@@ -17,6 +16,8 @@ let GameDB = {
     farms: [
       {
         id: 11,
+        planetId: 0,
+        farmIndex: 0,
         baseTime: 30,
         maxPop: 20,
         baseAP: 2,
@@ -26,6 +27,8 @@ let GameDB = {
       },
       {
         id: 12,
+        planetId: 0,
+        farmIndex: 1,
         baseTime: 360,
         maxPop: 60,
         baseAP: 64,
@@ -35,6 +38,8 @@ let GameDB = {
       },
       {
         id: 13,
+        planetId: 0,
+        farmIndex: 2,
         baseTime: 2400,
         maxPop: 100,
         baseAP: 500,
@@ -44,6 +49,8 @@ let GameDB = {
       },
       {
         id: 21,
+        planetId: 1,
+        farmIndex: 0,
         baseTime: 150,
         maxPop: 80,
         baseAP: 14,
@@ -53,6 +60,8 @@ let GameDB = {
       },
       {
         id: 22,
+        planetId: 1,
+        farmIndex: 1,
         baseTime: 2400,
         maxPop: 160,
         baseAP: 75,
@@ -62,6 +71,8 @@ let GameDB = {
       },
       {
         id: 23,
+        planetId: 1,
+        farmIndex: 2,
         baseTime: 72000,
         maxPop: 500,
         baseAP: 4864,
@@ -71,6 +82,8 @@ let GameDB = {
       },
       {
         id: 31,
+        planetId: 2,
+        farmIndex: 0,
         baseTime: 3000,
         maxPop: 150,
         baseAP: 840,
@@ -80,6 +93,8 @@ let GameDB = {
       },
       {
         id: 32,
+        planetId: 2,
+        farmIndex: 1,
         baseTime: 975000,
         maxPop: 2000,
         baseAP: 422000,
@@ -89,6 +104,8 @@ let GameDB = {
       },
       {
         id: 33,
+        planetId: 2,
+        farmIndex: 2,
         baseTime: 1875000,
         maxPop: 4000,
         baseAP: 845000,
@@ -98,12 +115,27 @@ let GameDB = {
       },
       {
         id: 41,
+        planetId: 3,
+        farmIndex: 0,
         baseTime: 1875000,
         maxPop: 1000,
         baseAP: 7180,
         // Difar, Kento, Organium
         baseMats: [1, 1, 0, 0, 1, 0, 0, 0],
         isTimeRounded: true,
+        isOuro: true,
+      },
+      {
+        id: 42,
+        planetId: 3,
+        farmIndex: 1,
+        baseTime: 1875000,
+        maxPop: 10000,
+        baseAP: 7180,
+        // Chromium, Adamorphium, Darkseid
+        baseMats: [0, 0, 1, 0, 0, 1, 0, 1],
+        isTimeRounded: true,
+        isOuro: true,
       },
     ], // END .farms
     projects: [

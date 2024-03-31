@@ -215,6 +215,7 @@ const sections = [
         label:
           '<label class="has-tip" data-bs-toggle="tooltip" data-bs-title="Insert Bonus value, not level! e.g. 1.1">Ultima: Mats Bonus</label>',
         max: 30,
+        style: { width: 80 },
         isOuro: true,
       },
       { id: 'iapCollector', type: 'checkbox', label: 'IAP: Collectors Pack' },
@@ -347,6 +348,7 @@ const sections = [
         id: 'creationgemnode3bonus',
         type: 'number',
         label: 'Creation Gem Node #3 Bonus',
+        style: { width: 80 },
       },
     ],
   },

@@ -1,3 +1,11 @@
+function GetAvailableFarms() {
+  const availableFarms = GameDB.academy.farms.filter(
+    (f) => playerData.ouro.enabled || !f.isOuro,
+  )
+
+  return availableFarms
+}
+
 function GetMissionSpeedBonus() {
   let missionSpeedBonus = Math.pow(1.0311, playerData.loopMods.swarm)
   missionSpeedBonus *= Math.pow(
