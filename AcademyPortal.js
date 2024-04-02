@@ -23,57 +23,60 @@ function GetMissionSpeedBonus() {
 
 function CalculateFarmTimes(getRawTime = false) {
   let missionSpeedBonus = GetMissionSpeedBonus()
+  const farms = GetAvailableFarms()
 
   let farmData = []
-  for (let planet = 0; planet < GameDB.academy.planets; planet++) {
-    for (let farm = 0; farm < 3; farm++) {
-      const farmInfo = GameDB.academy.farms[planet * 3 + farm]
-      const farmSetting = playerData.academy.farms[planet][farm]
-      const personnelSetting = playerData.academy.personnel
 
-      let power = 0
-      let population = 0
-      power += (farmSetting.pods || 0) * (personnelSetting[0].power || 0)
-      population += farmSetting.pods || 0
-      power += (farmSetting.fireteams || 0) * (personnelSetting[1].power || 0)
-      population += farmSetting.fireteams || 0
-      power += (farmSetting.titans || 0) * (personnelSetting[2].power || 0)
-      population += farmSetting.titans || 0
-      power += (farmSetting.corvettes || 0) * (personnelSetting[3].power || 0)
-      population += farmSetting.corvettes || 0
+  farms.forEach((f) => {
+    const planet = f.planetId
+    const farm = f.farmIndex
 
-      if (power === 0) {
-        if (getRawTime) {
-          farmData.push({ time: 1e10, personnel: population })
-          continue
-        }
-        farmData.push({ time: '', personnel: 0 })
-        continue
-      }
+    const farmInfo = GameDB.academy.farms[planet * 3 + farm]
+    const farmSetting = playerData.academy.farms[planet][farm]
+    const personnelSetting = playerData.academy.personnel
 
-      const MIN_TIME = 2
+    let power = 0
+    let population = 0
+    power += (farmSetting.pods || 0) * (personnelSetting[0].power || 0)
+    population += farmSetting.pods || 0
+    power += (farmSetting.fireteams || 0) * (personnelSetting[1].power || 0)
+    population += farmSetting.fireteams || 0
+    power += (farmSetting.titans || 0) * (personnelSetting[2].power || 0)
+    population += farmSetting.titans || 0
+    power += (farmSetting.corvettes || 0) * (personnelSetting[3].power || 0)
+    population += farmSetting.corvettes || 0
 
-      const time = (60 * farmInfo.baseTime) / (power * missionSpeedBonus)
-      const isCapped = time <= MIN_TIME
-      const actualTime = isCapped
-        ? MIN_TIME
-        : farmInfo.isTimeRounded
-        ? Math.ceil(time)
-        : time
-
+    if (power === 0) {
       if (getRawTime) {
-        farmData.push({ time: actualTime, personnel: population })
-        continue
+        farmData.push({ time: 1e10, personnel: population })
+        return
       }
-
-      farmData.push({
-        time: formatDuration2(actualTime),
-        rawTime: time.toFixed(2),
-        isCapped,
-        personnel: population,
-      })
+      farmData.push({ time: '', personnel: 0 })
+      return
     }
-  }
+
+    const MIN_TIME = 2
+
+    const time = (60 * farmInfo.baseTime) / (power * missionSpeedBonus)
+    const isCapped = time <= MIN_TIME
+    const actualTime = isCapped
+      ? MIN_TIME
+      : farmInfo.isTimeRounded
+      ? Math.ceil(time)
+      : time
+
+    if (getRawTime) {
+      farmData.push({ time: actualTime, personnel: population })
+      return
+    }
+
+    farmData.push({
+      time: formatDuration2(actualTime),
+      rawTime: time.toFixed(2),
+      isCapped,
+      personnel: population,
+    })
+  })
 
   return farmData
 }

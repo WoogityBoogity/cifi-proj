@@ -548,6 +548,8 @@ academyFarmPortal.pages.default.initFunction = function (panel) {
       ]
       if (playerData.ouro.enabled) {
         options.push({ value: '41', label: '4-1' })
+        options.push({ value: '42', label: '4-2' })
+        options.push({ value: '43', label: '4-3' })
       }
 
       const filter = $(
