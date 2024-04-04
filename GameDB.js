@@ -119,7 +119,7 @@ let GameDB = {
         farmIndex: 0,
         baseTime: 21000,
         maxPop: 1000,
-        baseAP: 0,
+        baseAP: 7200,
         // Difar, Kento, Organium
         baseMats: [40, 60, 0, 0, 50, 0, 0, 0],
         isTimeRounded: true,
@@ -131,7 +131,7 @@ let GameDB = {
         farmIndex: 1,
         baseTime: 4875000,
         maxPop: 10000,
-        baseAP: 0,
+        baseAP: 1400000,
         // Chromium, Adamorphium, Darkseid
         baseMats: [0, 0, 8000, 0, 0, 7000, 0, 2000],
         isTimeRounded: true,
@@ -143,7 +143,7 @@ let GameDB = {
         farmIndex: 2,
         baseTime: 9750000,
         maxPop: 20000,
-        baseAP: 0,
+        baseAP: 2800000,
         // Exon, Moskom, Darkseid
         baseMats: [0, 0, 0, 30000, 0, 0, 20000, 5000],
         isTimeRounded: true,
