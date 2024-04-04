@@ -117,7 +117,7 @@ let GameDB = {
         id: 41,
         planetId: 3,
         farmIndex: 0,
-        baseTime: 1e9,
+        baseTime: 21000,
         maxPop: 1000,
         baseAP: 0,
         // Difar, Kento, Organium
@@ -130,7 +130,7 @@ let GameDB = {
         id: 42,
         planetId: 3,
         farmIndex: 1,
-        baseTime: 1e9,
+        baseTime: 4875000,
         maxPop: 10000,
         baseAP: 0,
         // Chromium, Adamorphium, Darkseid
@@ -143,7 +143,7 @@ let GameDB = {
         id: 43,
         planetId: 3,
         farmIndex: 2,
-        baseTime: 1e9,
+        baseTime: 9750000,
         maxPop: 20000,
         baseAP: 0,
         // Exon, Moskom, Darkseid
