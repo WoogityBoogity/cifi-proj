@@ -121,8 +121,7 @@ let GameDB = {
         maxPop: 1000,
         baseAP: 0,
         // Difar, Kento, Organium
-        // baseMats: [1, 1, 0, 0, 1, 0, 0, 0],
-        baseMats: [0, 0, 0, 0, 0, 0, 0, 0],
+        baseMats: [40, 60, 0, 0, 50, 0, 0, 0],
         isTimeRounded: true,
         isOuro: true,
       },
@@ -134,8 +133,7 @@ let GameDB = {
         maxPop: 10000,
         baseAP: 0,
         // Chromium, Adamorphium, Darkseid
-        // baseMats: [0, 0, 1, 0, 0, 1, 0, 1],
-        baseMats: [0, 0, 0, 0, 0, 0, 0, 0],
+        baseMats: [0, 0, 8000, 0, 0, 7000, 0, 2000],
         isTimeRounded: true,
         isOuro: true,
       },
@@ -147,8 +145,7 @@ let GameDB = {
         maxPop: 20000,
         baseAP: 0,
         // Exon, Moskom, Darkseid
-        // baseMats: [0, 0, 0, 1, 0, 0, 1, 1],
-        baseMats: [0, 0, 0, 0, 0, 0, 0, 0],
+        baseMats: [0, 0, 0, 30000, 0, 0, 20000, 5000],
         isTimeRounded: true,
         isOuro: true,
       },
