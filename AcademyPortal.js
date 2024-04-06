@@ -82,7 +82,7 @@ function CalculateFarmTimes(getRawTime = false) {
 }
 
 function GetMaxMissionRate() {
-  let farms = [...GameDB.academy.farms]
+  let farms = GetAvailableFarms()
 
   let missionSpeedBonus = GetMissionSpeedBonus()
 
@@ -123,55 +123,52 @@ function GetMaxMissionRate() {
 
   let farmDetails = []
 
-  for (let planet = 0; planet < GameDB.academy.planets; planet++) {
-    for (let farm = 0; farm < 3; farm++) {
-      let farmSpecs = {
-        id: farms[planet * 3 + farm].id,
-        locked: false,
-        maxPop: farms[planet * 3 + farm].maxPop,
-        currentPop: 0,
-        popDistro: [0, 0, 0, 0],
-        power: 0,
-        baseTime: farms[planet * 3 + farm].baseTime / missionSpeedBonus,
-        get availSpace() {
-          return this.maxPop - this.currentPop
-        },
-        get timeLimitPassed() {
-          return !(this.power === 0 || (this.baseTime * 60) / this.power >= 2)
-        },
-      }
+  farms.forEach((farm) => {
+    const playerFarmData =
+      playerData.academy.farms[farm.planetId][farm.farmIndex]
 
-      if (playerData.academy.farms[planet][farm].locked) {
-        farmSpecs.locked = true
-
-        farmSpecs.popDistro = [
-          playerData.academy.farms[planet][farm].pods,
-          playerData.academy.farms[planet][farm].fireteams,
-          playerData.academy.farms[planet][farm].titans,
-          playerData.academy.farms[planet][farm].corvettes,
-        ]
-        farmSpecs.power =
-          playerData.academy.farms[planet][farm].pods *
-          playerData.academy.personnel[0].power
-        farmSpecs.power +=
-          playerData.academy.farms[planet][farm].fireteams *
-          playerData.academy.personnel[1].power
-        farmSpecs.power +=
-          playerData.academy.farms[planet][farm].titans *
-          playerData.academy.personnel[2].power
-        farmSpecs.power +=
-          playerData.academy.farms[planet][farm].corvettes *
-          playerData.academy.personnel[3].power
-
-        personnel[3].usedPop += playerData.academy.farms[planet][farm].pods
-        personnel[2].usedPop += playerData.academy.farms[planet][farm].fireteams
-        personnel[1].usedPop += playerData.academy.farms[planet][farm].titans
-        personnel[0].usedPop += playerData.academy.farms[planet][farm].corvettes
-      }
-
-      farmDetails.push(farmSpecs)
+    let farmSpecs = {
+      id: farm.id,
+      locked: false,
+      maxPop: farm.maxPop,
+      currentPop: 0,
+      popDistro: [0, 0, 0, 0],
+      power: 0,
+      baseTime: farm.baseTime / missionSpeedBonus,
+      get availSpace() {
+        return this.maxPop - this.currentPop
+      },
+      get timeLimitPassed() {
+        return !(this.power === 0 || (this.baseTime * 60) / this.power >= 2)
+      },
     }
-  }
+
+    if (playerFarmData.locked) {
+      farmSpecs.locked = true
+
+      farmSpecs.popDistro = [
+        playerFarmData.pods,
+        playerFarmData.fireteams,
+        playerFarmData.titans,
+        playerFarmData.corvettes,
+      ]
+      farmSpecs.power =
+        playerFarmData.pods * playerData.academy.personnel[0].power
+      farmSpecs.power +=
+        playerFarmData.fireteams * playerData.academy.personnel[1].power
+      farmSpecs.power +=
+        playerFarmData.titans * playerData.academy.personnel[2].power
+      farmSpecs.power +=
+        playerFarmData.corvettes * playerData.academy.personnel[3].power
+
+      personnel[3].usedPop += playerFarmData.pods
+      personnel[2].usedPop += playerFarmData.fireteams
+      personnel[1].usedPop += playerFarmData.titans
+      personnel[0].usedPop += playerFarmData.corvettes
+    }
+
+    farmDetails.push(farmSpecs)
+  })
 
   // console.table(personnel);
   // console.log(farmDetails);

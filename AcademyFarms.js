@@ -726,32 +726,37 @@ function PopulateTiming() {
 function maximizeMissionRate() {
   GetMaxMissionRate()
 
-  for (let planet = 0; planet < GameDB.academy.planets; planet++) {
-    for (let farm = 0; farm < 3; farm++) {
-      for (let personnel = 0; personnel < 4; personnel++) {
-        let type = GameDB.academy.personnel[personnel]
-        portalPanel[`farm${planet}${farm}${type}`].value =
-          portalPanel.dataLinkage[`farm${planet}${farm}${type}`]
-      }
+  const farms = GetAvailableFarms()
+
+  farms.forEach((f) => {
+    const planet = f.planetId
+    const farm = f.farmIndex
+
+    for (let personnel = 0; personnel < 4; personnel++) {
+      let type = GameDB.academy.personnel[personnel]
+      portalPanel[`farm${planet}${farm}${type}`].value =
+        portalPanel.dataLinkage[`farm${planet}${farm}${type}`]
     }
-  }
+  })
 
   populateYield()
   PopulateTiming()
 }
 
 function clearMissions() {
-  for (let planet = 0; planet < GameDB.academy.planets; planet++) {
-    for (let farm = 0; farm < 3; farm++) {
-      if (playerData.academy.farms[planet][farm].locked) continue
+  const farms = GetAvailableFarms()
 
-      for (let personnel = 0; personnel < 4; personnel++) {
-        let type = GameDB.academy.personnel[personnel]
-        portalPanel.dataLinkage[`farm${planet}${farm}${type}`] = 0
-        portalPanel[`farm${planet}${farm}${type}`].value = 0
-      }
+  farms.forEach((f) => {
+    const planet = f.planetId
+    const farm = f.farmIndex
+    if (playerData.academy.farms[planet][farm].locked) return
+
+    for (let personnel = 0; personnel < 4; personnel++) {
+      let type = GameDB.academy.personnel[personnel]
+      portalPanel.dataLinkage[`farm${planet}${farm}${type}`] = 0
+      portalPanel[`farm${planet}${farm}${type}`].value = 0
     }
-  }
+  })
 
   SavePlayerData()
   populateYield()
