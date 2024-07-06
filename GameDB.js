@@ -96,6 +96,15 @@ let GameDB = {
         baseMats: [0, 0, 0, 0, 5200, 2440, 3980, 160],
         isTimeRounded: true,
       },
+      {
+        id: 43,
+        baseTime: 1875000,
+        maxPop: 4000,
+        baseAP: 845000,
+        // Organium, Adamorphium, Moskom, Darkseid
+        baseMats: [0, 0, 0, 0, 5200, 2440, 3980, 160],
+        isTimeRounded: true,
+      },
     ], // END .farms
     projects: [
       {
